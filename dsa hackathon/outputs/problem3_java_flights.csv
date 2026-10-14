@@ -1,0 +1,9 @@
+from_city,to_city,price,on_path,coupon_used,effective_price
+1,2,300,x,NO,300
+1,3,700,,NO,700
+2,3,100,x,NO,100
+2,4,400,,NO,400
+3,4,200,,NO,200
+4,5,500,,NO,500
+3,5,800,x,YES,400
+2,5,1200,,NO,1200

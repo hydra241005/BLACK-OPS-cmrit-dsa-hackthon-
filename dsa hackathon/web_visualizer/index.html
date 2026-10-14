@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSE Hackathon 2026 - Data Structures & Algorithms Interactive Suite</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="header-left">
+        <span class="badge">CMRIT CSE HACKATHON 2026</span>
+        <h1>Data Structures & Algorithms - Complete Solutions & Visualizer</h1>
+      </div>
+      <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('prob1')">Problem 1: Maze & Keys</button>
+        <button class="tab-btn" onclick="switchTab('prob2')">Problem 2: Closest Pair</button>
+        <button class="tab-btn" onclick="switchTab('prob3')">Problem 3: Budget Flights</button>
+        <button class="tab-btn" onclick="switchTab('prob4')">Problem 4: Exam Scheduling</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="content-container">
+    <!-- ==================== PROBLEM 1 ==================== -->
+    <section id="prob1" class="tab-content active">
+      <div class="problem-header">
+        <h2>Problem 1: Maze with Keys and Doors</h2>
+        <p class="description">
+          Find the shortest path from Start (S) to Exit (E) in an N×N grid with T keys (a–f) and matching doors (A–F).
+          Doors require keys to open; once collected, keys remain in inventory permanently.
+        </p>
+      </div>
+
+      <div class="controls-panel">
+        <div class="control-group">
+          <label for="p1-grid-size">Grid Size (N):</label>
+          <input type="number" id="p1-grid-size" value="10" min="5" max="25">
+        </div>
+        <div class="control-group">
+          <label for="p1-key-types">Key Types (T):</label>
+          <select id="p1-key-types">
+            <option value="1">1 (a/A)</option>
+            <option value="2">2 (a-b/A-B)</option>
+            <option value="3" selected>3 (a-c/A-C)</option>
+            <option value="4">4 (a-d/A-D)</option>
+            <option value="5">5 (a-e/A-E)</option>
+            <option value="6">6 (a-f/A-F)</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="initMaze()">Generate Solvable Maze</button>
+        <button class="btn btn-success" onclick="solveMazeAnimation()">Solve & Animate Path</button>
+        <button class="btn btn-secondary" onclick="resetMazeAnimation()">Reset</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="visualizer-card">
+          <h3>Maze Grid Canvas</h3>
+          <div class="canvas-container">
+            <canvas id="maze-canvas" width="500" height="500"></canvas>
+          </div>
+          <div class="legend">
+            <span><span class="dot" style="background:#2ECC71"></span> Start (S)</span>
+            <span><span class="dot" style="background:#E74C3C"></span> Exit (E)</span>
+            <span><span class="dot" style="background:#263238"></span> Wall (#)</span>
+            <span><span class="dot" style="background:#FFFFFF; border:1px solid #999"></span> Open (.)</span>
+            <span><span class="dot" style="background:#FFD700"></span> Key a / Door A</span>
+            <span><span class="dot" style="background:#1E90FF"></span> Key b / Door B</span>
+            <span><span class="dot" style="background:#FF1493"></span> Key c / Door C</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Execution Status</h3>
+          <div class="stats-box">
+            <div class="stat-item"><span class="stat-label">Shortest Path Length:</span> <span id="p1-path-len" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Current Step:</span> <span id="p1-curr-step" class="stat-val">0</span></div>
+            <div class="stat-item"><span class="stat-label">Current Position:</span> <span id="p1-curr-pos" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Visited States:</span> <span id="p1-visited-states" class="stat-val">0</span></div>
+          </div>
+
+          <h3>Key Inventory Panel</h3>
+          <div id="key-inventory-list" class="inventory-list"></div>
+
+          <h3>Door Status</h3>
+          <div id="door-status-list" class="inventory-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROBLEM 2 ==================== -->
+    <section id="prob2" class="tab-content">
+      <div class="problem-header">
+        <h2>Problem 2: Closest Pair of Points Comparative Analysis</h2>
+        <p class="description">
+          Compares Brute-Force O(N²) vs Divide-and-Conquer O(N log N). Visualizes the dividing line, the 2d-width strip region, and verifies 100% agreement on minimum distance.
+        </p>
+      </div>
+
+      <div class="controls-panel">
+        <div class="control-group">
+          <label for="p2-num-points">Points (N):</label>
+          <input type="number" id="p2-num-points" value="60" min="2" max="1000">
+        </div>
+        <button class="btn btn-primary" onclick="initClosestPair()">Generate Random Points</button>
+        <button class="btn btn-success" onclick="runClosestPairComparison()">Run Algorithms & Plot</button>
+        <button class="btn btn-secondary" onclick="runClosestPairBenchmark()">Run Benchmark Suite</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="visualizer-card">
+          <h3>2D Plane View (Dividing Line & Strip Region [x_mid ± d])</h3>
+          <div class="canvas-container">
+            <canvas id="points-canvas" width="600" height="480"></canvas>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Algorithm Comparison Results</h3>
+          <div class="stats-box">
+            <div class="stat-item"><span class="stat-label">BF Min Distance:</span> <span id="p2-bf-dist" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">DC Min Distance:</span> <span id="p2-dc-dist" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Brute-Force Time:</span> <span id="p2-bf-time" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Divide & Conquer Time:</span> <span id="p2-dc-time" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Agreement Verification:</span> <span id="p2-agree-status" class="stat-val badge-pass">-</span></div>
+            <div class="stat-item"><span class="stat-label">Closest Coordinates:</span> <span id="p2-coords" class="stat-val">-</span></div>
+          </div>
+          <div id="p2-benchmark-table-box" style="margin-top:15px; max-height:220px; overflow-y:auto;"></div>
+        </div>
+      </div>
+
+      <!-- Plot a running-time vs N graph for both algorithms -->
+      <div class="visualizer-card" style="margin-top: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <h3 style="margin: 0; border: none; padding: 0;">Plot: Running-Time vs N Graph (Brute-Force O(N²) vs Divide-and-Conquer O(N log N))</h3>
+          <div class="legend" style="margin: 0;">
+            <span><span class="dot" style="background:#EF4444"></span> Brute-Force O(N²)</span>
+            <span><span class="dot" style="background:#38BDF8"></span> Divide-and-Conquer O(N log N)</span>
+          </div>
+        </div>
+        <div class="canvas-container">
+          <canvas id="p2-runtime-canvas" width="850" height="340"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROBLEM 3 ==================== -->
+    <section id="prob3" class="tab-content">
+      <div class="problem-header">
+        <h2>Problem 3: Budget Traveller with Coupons</h2>
+        <p class="description">
+          Find the minimum flight cost from City 1 to City N with at most K stops and C discount coupons (50% off floor(p/2) on selected flights).
+        </p>
+      </div>
+
+      <div class="controls-panel">
+        <div class="control-group">
+          <label for="p3-cities">Cities (N):</label>
+          <input type="number" id="p3-cities" value="6" min="2" max="12">
+        </div>
+        <div class="control-group">
+          <label for="p3-stops">Max Stops (K):</label>
+          <input type="number" id="p3-stops" value="2" min="0" max="6">
+        </div>
+        <div class="control-group">
+          <label for="p3-coupons">Coupons (C):</label>
+          <input type="number" id="p3-coupons" value="1" min="0" max="4">
+        </div>
+        <button class="btn btn-primary" onclick="initFlights()">Generate Network</button>
+        <button class="btn btn-success" onclick="solveFlightAnimation()">Find Path & Animate</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="visualizer-card">
+          <h3>Flight Network Graph</h3>
+          <div class="canvas-container">
+            <canvas id="flights-canvas" width="600" height="480"></canvas>
+          </div>
+          <div class="legend">
+            <span><span class="dot" style="background:#4CAF50"></span> Start (City 1)</span>
+            <span><span class="dot" style="background:#F44336"></span> Destination (City N)</span>
+            <span><span class="dot" style="background:#FF9800"></span> Intermediate Stop</span>
+            <span><span class="dot" style="background:#2196F3"></span> Standard Flight</span>
+            <span><span class="dot" style="background:#FFD700"></span> Coupon Applied (50% Off)</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Journey Dashboard</h3>
+          <div class="stats-box">
+            <div class="stat-item"><span class="stat-label">Minimum Total Cost:</span> <span id="p3-min-cost" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Stops Used:</span> <span id="p3-stops-used" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Coupons Applied:</span> <span id="p3-coupons-used" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Current Leg:</span> <span id="p3-curr-leg" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Ticket Transition:</span> <span id="p3-ticket-transition" class="stat-val">-</span></div>
+          </div>
+          <h3>Flight Legs Itinerary</h3>
+          <div id="p3-itinerary-list" class="inventory-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROBLEM 4 ==================== -->
+    <section id="prob4" class="tab-content">
+      <div class="problem-header">
+        <h2>Problem 4: Exam Timetable Scheduling (Graph Colouring)</h2>
+        <p class="description">
+          Assigns N courses to time slots such that conflicting courses do not share slots, and no slot exceeds R exams (hall capacity), minimizing total slots.
+        </p>
+      </div>
+
+      <div class="controls-panel">
+        <div class="control-group">
+          <label for="p4-courses">Courses (N):</label>
+          <input type="number" id="p4-courses" value="10" min="3" max="25">
+        </div>
+        <div class="control-group">
+          <label for="p4-capacity">Hall Capacity (R):</label>
+          <input type="number" id="p4-capacity" value="3" min="1" max="6">
+        </div>
+        <div class="control-group">
+          <label for="p4-density">Conflict Density:</label>
+          <input type="number" id="p4-density" value="0.30" step="0.05" min="0.1" max="0.8">
+        </div>
+        <button class="btn btn-primary" onclick="initExamSchedule()">Generate Conflicts</button>
+        <button class="btn btn-success" onclick="runExamScheduler()">Schedule & Compare</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="visualizer-card">
+          <h3>Conflict Graph (Nodes coloured by assigned Time Slot)</h3>
+          <div class="canvas-container">
+            <canvas id="exam-canvas" width="600" height="460"></canvas>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Comparative Analysis</h3>
+          <div class="stats-box">
+            <div class="stat-item"><span class="stat-label">Theoretical Lower Bound:</span> <span id="p4-lb" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Welsh-Powell Slots:</span> <span id="p4-wp-slots" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">DSATUR Slots:</span> <span id="p4-ds-slots" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Exact B&B Slots:</span> <span id="p4-ex-slots" class="stat-val">-</span></div>
+            <div class="stat-item"><span class="stat-label">Optimality Status:</span> <span id="p4-opt-status" class="stat-val badge-pass">-</span></div>
+          </div>
+          <h3>Final Timetable Matrix</h3>
+          <div id="p4-timetable-container" style="max-height:220px; overflow-y:auto;"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
